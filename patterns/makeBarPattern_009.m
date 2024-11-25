@@ -28,7 +28,7 @@ panel_pattern.y_num = numScenesY;
 panel_pattern.num_panels = numPanelsHoriz * numPanelsVert;
 panel_pattern.gs_val = 4; % 1, 2, 3, or 4. Typical bright bar expts are
                           % gs_val=2 but with '1' as the brightness.
-                          % 1 = 0,1  2 = 0,1,2,3  3 = 0-7  4 = 0-16
+                          % 1 = 0,1  2 = 0,1,2,3  3 = 0-7  4 = 0-15
 
 panel_pattern.Panel_map = [02,04,08,01,03,06,09,12,11,05,10,07;
                            22,17,23,24,21,18,15,13,20,16,14,19;

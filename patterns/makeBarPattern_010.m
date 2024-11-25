@@ -9,7 +9,7 @@ gsVal = 4;
 % 1 = 0,1
 % 2 = 0,1,2,3
 % 3 = 0-7
-% 4 = 0-16
+% 4 = 0-15
 % Typical bright bar expts are gsVal=2 but with '1' as the brightness.
 
 featVal = 10;
