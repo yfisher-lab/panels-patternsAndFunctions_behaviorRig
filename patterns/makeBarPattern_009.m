@@ -1,11 +1,11 @@
 clear all; close all;
 %%
 
-SAVE_NAME = 'Pattern_007_2pxBar-Wrap88-Straddle.mat';
+SAVE_NAME = 'Pattern_009_4pxDimBar-Wrap88-Straddle.mat';
 
-LINE_WIDTH = 2;
+LINE_WIDTH = 4;
 
-BRIGHT_FEAT_ON_DARK = true;
+BRIGHT_FEAT_ON_DARK = false;
 
 MAKE_MASK = false;
 maskColCoords = 65:72;
@@ -26,7 +26,7 @@ numScenesY = 1 + 1; % Add extra Y-scene to be able to blank the display.
 panel_pattern.x_num = numScenesX; 
 panel_pattern.y_num = numScenesY;
 panel_pattern.num_panels = numPanelsHoriz * numPanelsVert;
-panel_pattern.gs_val = 2; % 1, 2, 3, or 4. Typical bright bar expts are
+panel_pattern.gs_val = 4; % 1, 2, 3, or 4. Typical bright bar expts are
                           % gs_val=2 but with '1' as the brightness.
                           % 1 = 0,1  2 = 0,1,2,3  3 = 0-7  4 = 0-16
 
@@ -40,8 +40,8 @@ if BRIGHT_FEAT_ON_DARK == true
     Pats = zeros(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
     featVal = 1;
 elseif BRIGHT_FEAT_ON_DARK == false
-    Pats = ones(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
-    featVal = 0;
+    Pats = 10*ones(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
+    featVal = 5;
 end
 
 sceneYi = 1; 
@@ -51,7 +51,7 @@ for sceneXi = 1:numScenesX-(LINE_WIDTH-1)
     if BRIGHT_FEAT_ON_DARK == true
         currSceneX = zeros(numDotsVert, numDotsHoriz);
     elseif BRIGHT_FEAT_ON_DARK == false
-        currSceneX = ones(numDotsVert, numDotsHoriz);
+        currSceneX = 10*ones(numDotsVert, numDotsHoriz);
     end
     
     % Make feature on scene in ones or zeros.
@@ -69,7 +69,7 @@ for sceneXi = ((numScenesX-(LINE_WIDTH-1))+1):numScenesX
     if BRIGHT_FEAT_ON_DARK == true
         currSceneX = zeros(numDotsVert, numDotsHoriz);
     elseif BRIGHT_FEAT_ON_DARK == false
-        currSceneX = ones(numDotsVert, numDotsHoriz);
+        currSceneX = 10*ones(numDotsVert, numDotsHoriz);
     end
 
     % Make feature on scene in ones or zeros.
@@ -89,7 +89,7 @@ end
 if BRIGHT_FEAT_ON_DARK == true
     Pats(:, :, :, panel_pattern.y_num) = 0;
 elseif BRIGHT_FEAT_ON_DARK == false
-    Pats(:, :, :, panel_pattern.y_num) = 1;
+    Pats(:, :, :, panel_pattern.y_num) = 10*1;
 end
 
 
@@ -98,7 +98,7 @@ if MAKE_MASK == true
     if BRIGHT_FEAT_ON_DARK == true
         Pats(:, maskColCoords, :, sceneYi) = 0;
     elseif BRIGHT_FEAT_ON_DARK == false
-        Pats(:, maskColCoords, :, sceneYi) = 1;
+        Pats(:, maskColCoords, :, sceneYi) = 10*1;
     end
 end
 

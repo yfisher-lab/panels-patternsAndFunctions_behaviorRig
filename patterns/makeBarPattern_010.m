@@ -1,13 +1,21 @@
 clear all; close all;
 %%
 
-SAVE_NAME = 'Pattern_007_2pxBar-Wrap88-Straddle.mat';
+SAVE_NAME = 'Pattern_010_4pxFaintBar-Wrap88-Straddle.mat';
 
-LINE_WIDTH = 2;
+LINE_WIDTH = 4;
 
-BRIGHT_FEAT_ON_DARK = true;
+gsVal = 4;
+% 1 = 0,1
+% 2 = 0,1,2,3
+% 3 = 0-7
+% 4 = 0-16
+% Typical bright bar expts are gsVal=2 but with '1' as the brightness.
 
-MAKE_MASK = false;
+featVal = 10;
+bgVal = 5;
+
+MAKE_COLUMN_MASK = false;
 maskColCoords = 65:72;
 
 %%
@@ -26,35 +34,22 @@ numScenesY = 1 + 1; % Add extra Y-scene to be able to blank the display.
 panel_pattern.x_num = numScenesX; 
 panel_pattern.y_num = numScenesY;
 panel_pattern.num_panels = numPanelsHoriz * numPanelsVert;
-panel_pattern.gs_val = 2; % 1, 2, 3, or 4. Typical bright bar expts are
-                          % gs_val=2 but with '1' as the brightness.
-                          % 1 = 0,1  2 = 0,1,2,3  3 = 0-7  4 = 0-16
+panel_pattern.gs_val = gsVal;
 
 panel_pattern.Panel_map = [02,04,08,01,03,06,09,12,11,05,10,07;
                            22,17,23,24,21,18,15,13,20,16,14,19;
                            34,29,35,36,33,30,27,25,32,28,26,31;
                            46,41,47,48,45,42,39,37,44,40,38,43];
 
-if BRIGHT_FEAT_ON_DARK == true
-    % Generate Pats = 4-D array (32x96x88x2 in many cases).
-    Pats = zeros(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
-    featVal = 1;
-elseif BRIGHT_FEAT_ON_DARK == false
-    Pats = ones(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
-    featVal = 0;
-end
+Pats = bgVal*ones(numDotsVert, numDotsHoriz, numScenesX, numScenesY);
 
-sceneYi = 1; 
+sceneYi = 1;
 for sceneXi = 1:numScenesX-(LINE_WIDTH-1)
 
-    % Draw the current scene in zeros or ones.
-    if BRIGHT_FEAT_ON_DARK == true
-        currSceneX = zeros(numDotsVert, numDotsHoriz);
-    elseif BRIGHT_FEAT_ON_DARK == false
-        currSceneX = ones(numDotsVert, numDotsHoriz);
-    end
-    
-    % Make feature on scene in ones or zeros.
+    % Draw the current scene.
+    currSceneX = bgVal*ones(numDotsVert, numDotsHoriz);
+
+    % Make feature on scene.
     xPos = sceneXi;
     currSceneX(:, xPos:(xPos+(LINE_WIDTH-1))) = featVal;
     
@@ -65,16 +60,13 @@ end
 % Handle wrapping.
 for sceneXi = ((numScenesX-(LINE_WIDTH-1))+1):numScenesX
     
-    % Draw the current scene in zeros or ones.
-    if BRIGHT_FEAT_ON_DARK == true
-        currSceneX = zeros(numDotsVert, numDotsHoriz);
-    elseif BRIGHT_FEAT_ON_DARK == false
-        currSceneX = ones(numDotsVert, numDotsHoriz);
-    end
+    % Draw the current scene.
+    currSceneX = bgVal*ones(numDotsVert, numDotsHoriz);
 
-    % Make feature on scene in ones or zeros.
+    % Make feature on scene.
     xPos = sceneXi;
     currSceneX(:, xPos:numScenesX) = featVal;
+
     % Calculate number of columns filled.
     amountToWrap = length(xPos:numScenesX);
     % Calculate number of columns remaining = that need to be wrapped.
@@ -85,21 +77,13 @@ for sceneXi = ((numScenesX-(LINE_WIDTH-1))+1):numScenesX
     Pats(:, :, sceneXi, sceneYi) = currSceneX;
 end
 
-% Make max Y-scene value equal to zeros (blank screen).
-if BRIGHT_FEAT_ON_DARK == true
-    Pats(:, :, :, panel_pattern.y_num) = 0;
-elseif BRIGHT_FEAT_ON_DARK == false
-    Pats(:, :, :, panel_pattern.y_num) = 1;
-end
+% Make max Y-scene value equal to bgVal (a blank screen).
+Pats(:, :, :, panel_pattern.y_num) = bgVal;
 
 
 %%
-if MAKE_MASK == true
-    if BRIGHT_FEAT_ON_DARK == true
-        Pats(:, maskColCoords, :, sceneYi) = 0;
-    elseif BRIGHT_FEAT_ON_DARK == false
-        Pats(:, maskColCoords, :, sceneYi) = 1;
-    end
+if MAKE_COLUMN_MASK == true
+    Pats(:, maskColCoords, :, sceneYi) = bgVal;
 end
 
 %%

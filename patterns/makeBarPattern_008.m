@@ -1,11 +1,11 @@
 clear all; close all;
 %%
 
-SAVE_NAME = 'Pattern_007_2pxBar-Wrap88-Straddle.mat';
+SAVE_NAME = 'Pattern_008_4pxDarkBar-Wrap88-Straddle.mat';
 
-LINE_WIDTH = 2;
+LINE_WIDTH = 4;
 
-BRIGHT_FEAT_ON_DARK = true;
+BRIGHT_FEAT_ON_DARK = false;
 
 MAKE_MASK = false;
 maskColCoords = 65:72;
@@ -28,7 +28,6 @@ panel_pattern.y_num = numScenesY;
 panel_pattern.num_panels = numPanelsHoriz * numPanelsVert;
 panel_pattern.gs_val = 2; % 1, 2, 3, or 4. Typical bright bar expts are
                           % gs_val=2 but with '1' as the brightness.
-                          % 1 = 0,1  2 = 0,1,2,3  3 = 0-7  4 = 0-16
 
 panel_pattern.Panel_map = [02,04,08,01,03,06,09,12,11,05,10,07;
                            22,17,23,24,21,18,15,13,20,16,14,19;
