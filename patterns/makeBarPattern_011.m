@@ -59,7 +59,7 @@ panel_pattern.Pats = Pats;
 panel_pattern.BitMapIndex = process_panel_map(panel_pattern);
 panel_pattern.data = Make_pattern_vector(panel_pattern);
 
-% mainDir = 'C:\Users\fisherlab\Documents\GitHub\';
-% subDir = 'panels-patternsAndFunctions_behaviorRig\patterns\';
-% str = [mainDir subDir SAVE_NAME];
-% save(str, 'panel_pattern');
+mainDir = 'C:\Users\fisherlab\Documents\GitHub\';
+subDir = 'panels-patternsAndFunctions_behaviorRig\patterns\';
+str = [mainDir subDir SAVE_NAME];
+save(str, 'panel_pattern');
